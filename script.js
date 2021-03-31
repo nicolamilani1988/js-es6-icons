@@ -120,8 +120,10 @@ function printItems(){
 
 // Milestone 2
 // Coloriamo le icone per tipo
-// associare a ogni color[i] un type[i]
-// 1 - array di colori 2 - estrarre tutti i type 3 - associare
+
+// 1-estrarre tutti i type
+// 2-associare type - colore
+// 3-aggiungere chiave all'object
 function getTypes(){
   const items = getArr();
   // const typeSolo = items.map(elem => {
@@ -164,7 +166,7 @@ function addColor(){
 
 function init(){
 
-  printItems(); 
+  printItems();
   getTypes();
   addColor();
 
