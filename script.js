@@ -110,7 +110,6 @@ function printItems(){
 
   items.forEach(elem => {
     let{name,prefix,type,family} = elem;
-    console.log(type);
     $(".icons").append(`
         <div>
           <i class = "${family} ${prefix}${name}"></i>
@@ -119,9 +118,24 @@ function printItems(){
   })
 }
 
+// Milestone 2
+// Coloriamo le icone per tipo
+// associare a ogni color[i] un type[i]
+// 1 - array di colori 2 - estrarre tutti i type 3 - associare
+function getColor(){
+  const items = getArr();
+  const colors = ["blue","orange","purple","red","green"];
+  const types = items.map(elem => {
+
+    return elem["type"];
+  })
+  console.log(types);
+}
+
 
 function init(){
   printItems();
+  getColor();
 }
 
 $(init);
