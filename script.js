@@ -106,7 +106,7 @@ function getArr(){
 // Partendo dalla seguente struttura dati , mostriamo in pagina tutte le icone disponibili come da layout.
 
 function printItems(){
-  const items = addColor();
+  const items = addColor(); // = uguale a getArr() ma con aggiunta chiave color
 
   items.forEach(elem => {
     let{color,name,prefix,type,family} = elem;
@@ -138,18 +138,17 @@ function getTypes(){
       types.push(type);
     }
   }
-  return types;
+  return types; // array univoco dei valori alla voce "type"
 }
 
 function addColor(){
   const items = getArr();
-  // console.log(items);
   const colors = ["blue","orange","purple","red","green"];
   const types = getTypes();
   for (let i = 0;i<items.length;i++){
     let item = items[i];
     let type = item["type"];
-    for(let j = 0;j<types.length;j++){
+    for(let j = 0;j<types.length;j++){ //ciclo annidato per assegnare un colore a ogni type
       if(type == types[j]){
         let color = colors[j];
         item["color"] = color;
@@ -157,18 +156,18 @@ function addColor(){
     }
   }
   console.log(items);
-  return items;
+  return items; // array iniziale con aggiunta del "color"
 
 }
 
 
 
-
-
 function init(){
-  printItems();
+
+  printItems(); 
   getTypes();
   addColor();
+
 }
 
 $(init);
