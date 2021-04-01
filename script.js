@@ -167,7 +167,6 @@ function addColor(){
 // Creiamo una select con i tipi di icone e usiamola per filtrare le icone
 function filterCreate(){
   const types = getTypes();
-
   types.forEach(elem => {
     $("#type").append(`
         <option class="types" value="${elem}">${elem}</option>
@@ -180,17 +179,23 @@ function filterSelect(){
   const types = getTypes();
   console.log(types, selectedType);
 
-  for(let i = 0;i<types.length;i++){
-    if(selectedType == types[i]){
+  // for(let i = 0;i<types.length;i++){
+  //   if(selectedType == types[i]){
+  //     $(`.element`).hide();
+  //     $(`.element.${selectedType}`).show();
+  //   }
+  // }
+
+  types.forEach(elem =>{
+    if(selectedType == elem){
       $(`.element`).hide();
       $(`.element.${selectedType}`).show();
     }
-  }
+  })
 
   if(selectedType == "all"){
     $(`.element`).show();
   }
-
 
 }
 
@@ -202,6 +207,7 @@ function init(){
   addColor();
   filterCreate();
   $(".types").click(filterSelect);
+  
 }
 
 $(init);
