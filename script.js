@@ -148,18 +148,26 @@ function addColor(){
   const items = getArr();
   const colors = ["blue","orange","purple","red","green"];
   const types = getTypes();
-  for (let i = 0;i<items.length;i++){
-    let item = items[i];
-    let type = item["type"];
-    for(let j = 0;j<types.length;j++){ //ciclo annidato per assegnare un colore a ogni type
-      if(type == types[j]){
-        let color = colors[j];
-        item["color"] = color;
-      }
-    }
-  }
-  console.log(items);
-  return items; // array iniziale con aggiunta del "color"
+  // for (let i = 0;i<items.length;i++){
+  //   let item = items[i];
+  //   let type = item["type"];
+  //   for(let j = 0;j<types.length;j++){ //ciclo annidato per assegnare un colore a ogni type
+  //     if(type == types[j]){
+  //       let color = colors[j];
+  //       item["color"] = color;
+  //     }
+  //   }
+  // }
+
+  const itemsNew = items.map(elem =>{
+    let type = elem["type"];
+    let typeIndex = types.indexOf(type);
+    let color = colors[typeIndex];
+    elem["color"] = color;
+    return elem;
+  })
+  console.log(itemsNew);
+  return itemsNew; // array iniziale con aggiunta del "color"
 
 }
 
@@ -207,7 +215,7 @@ function init(){
   addColor();
   filterCreate();
   $(".types").click(filterSelect);
-  
+
 }
 
 $(init);
