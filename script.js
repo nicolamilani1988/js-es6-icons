@@ -1,4 +1,4 @@
-function getArr(){
+function getArr(){ //Funzione per avere array originale
   const arr = [
     {
       name: "cat",
@@ -105,9 +105,9 @@ function getArr(){
 // Milestone 1
 // Partendo dalla seguente struttura dati , mostriamo in pagina tutte le icone disponibili come da layout.
 
-function printItems(){
-  const items = addColor(); // = uguale a getArr() ma con aggiunta chiave color
+function printItems(){ //Funzione per stampare su pagina tutte le icone
 
+  const items = addColor(); // = uguale a getArr() ma con aggiunta chiave color
   items.forEach(elem => {
     let{color,name,prefix,type,family} = elem;
     $(".icons").append(`
@@ -121,33 +121,39 @@ function printItems(){
 
 // Milestone 2
 // Coloriamo le icone per tipo
-
 // 1-estrarre tutti i type
 // 2-associare type - colore
 // 3-aggiungere chiave all'object
-function getTypes(){
+function getTypes(){ //funzione per avere array di type univoci
   const items = getArr();
-  // const typeSolo = items.map(elem => {
-  //
-  //   return elem["type"];
-  // })
-  // console.log(types);
-
   const types = [];
-  for(let i = 0;i<items.length;i++){
-    let value = items[i];
-    let type = value["type"];
+
+  // svolgimento con CICLO FOR
+  // for(let i = 0;i<items.length;i++){
+  //   let value = items[i];
+  //   let type = value["type"];
+  //   if (!types.includes(type)){
+  //     types.push(type);
+  //   }
+  // }
+
+  // svolgimento con CICLO foreach
+  items.forEach(elem => {
+    let type = elem["type"];
     if (!types.includes(type)){
       types.push(type);
     }
-  }
+  })
+
   return types; // array univoco dei valori alla voce "type"
 }
 
-function addColor(){
+
+function addColor(){ // funzione che mi restituisce array con key COLOR
   const items = getArr();
   const colors = ["blue","orange","purple","red","green"];
   const types = getTypes();
+  // SVOLGIMENTO CON CICLO FOR
   // for (let i = 0;i<items.length;i++){
   //   let item = items[i];
   //   let type = item["type"];
@@ -159,6 +165,7 @@ function addColor(){
   //   }
   // }
 
+  // SVOLGIMENTO CON CICLO MAP
   const itemsNew = items.map(elem =>{
     let type = elem["type"];
     let typeIndex = types.indexOf(type);
@@ -168,25 +175,25 @@ function addColor(){
   })
   console.log(itemsNew);
   return itemsNew; // array iniziale con aggiunta del "color"
-
 }
 
 // Milestone 3
 // Creiamo una select con i tipi di icone e usiamola per filtrare le icone
-function filterCreate(){
+function filterCreate(){ //funzione per creare option del menu select
   const types = getTypes();
   types.forEach(elem => {
     $("#type").append(`
-        <option class="types" value="${elem}">${elem}</option>
+        <option class="select-option">${elem}</option>
       `);
   })
 }
 
-function filterSelect(){
-  let selectedType = $(this).val();
+// MIA VERSIONE
+function filterSelect(){ //funzione che mi individua val() e mi nasconde/mostra relative    classi
+  const selectedType = $(this).val();
   const types = getTypes();
   console.log(types, selectedType);
-
+  // SVOLGIMENTO CICLO FOR
   // for(let i = 0;i<types.length;i++){
   //   if(selectedType == types[i]){
   //     $(`.element`).hide();
@@ -194,6 +201,7 @@ function filterSelect(){
   //   }
   // }
 
+  // SVOLGIMENTO FOREACH
   types.forEach(elem =>{
     if(selectedType == elem){
       $(`.element`).hide();
@@ -201,10 +209,50 @@ function filterSelect(){
     }
   })
 
-  if(selectedType == "all"){
+  if(!types.includes(selectedType)){
     $(`.element`).show();
   }
+}
 
+
+
+// VERSIONE Olga con change ()
+function selectChange(){ // funzione che individua valore selezionato. Se non presente, ristampa tutto.
+  const types = getTypes();
+  const selectedType = $(this).val();
+
+  if(types.includes(selectedType)){
+    console.log(selectedType);
+    selectFiltered(selectedType);
+  } else {
+    $(".icons").html('');
+    printItems();
+  }
+}
+
+
+function selectFiltered(type){ // funzione che mi dice cosa stampare
+  const items = addColor();
+  const filteredItems = items.filter(elem => {
+    if(elem["type"] == type){
+      return elem;
+    }
+  })
+  printFiltered(filteredItems);
+}
+
+
+function printFiltered(array){ // funzione che stampa array selezionato.
+  $(".icons").html('');
+  array.forEach(elem => {
+    let{color,name,prefix,type,family} = elem;
+    $(".icons").append(`
+        <div class="${type} element">
+          <i class = "${family} ${prefix}${name}" style="color: ${color} "></i>
+          <div class="title">${name.toUpperCase()}</div>
+        </div>
+      `)
+  })
 }
 
 
@@ -214,8 +262,10 @@ function init(){
   getTypes();
   addColor();
   filterCreate();
-  $(".types").click(filterSelect);
-
+  //FUNZIONE NICOLA
+  $(".select-option").click(filterSelect);
+  // FUNZIONE OLGA
+  // $("#type").change(selectChange);
 }
 
 $(init);
