@@ -111,9 +111,10 @@ function printItems(){
   items.forEach(elem => {
     let{color,name,prefix,type,family} = elem;
     $(".icons").append(`
-        <div>
-          <i class = "${family} ${prefix}${name} ${type}" style="color: ${color} "></i>
+        <div class="${type} element">
+          <i class = "${family} ${prefix}${name}" style="color: ${color} "></i>
           <div class="title">${name.toUpperCase()}</div>
+        </div>
       `)
   })
 }
@@ -166,12 +167,31 @@ function addColor(){
 // Creiamo una select con i tipi di icone e usiamola per filtrare le icone
 function filterCreate(){
   const types = getTypes();
-  console.log(types);
+
   types.forEach(elem => {
     $("#type").append(`
-        <option value="${elem}">${elem}</option>
-      `)
+        <option class="types" value="${elem}">${elem}</option>
+      `);
   })
+}
+
+function filterSelect(){
+  let selectedType = $(this).val();
+  const types = getTypes();
+  console.log(types, selectedType);
+
+  for(let i = 0;i<types.length;i++){
+    if(selectedType == types[i]){
+      $(`.element`).hide();
+      $(`.element.${selectedType}`).show();
+    }
+  }
+
+  if(selectedType == "all"){
+    $(`.element`).show();
+  }
+
+
 }
 
 
@@ -181,6 +201,7 @@ function init(){
   getTypes();
   addColor();
   filterCreate();
+  $(".types").click(filterSelect);
 }
 
 $(init);
