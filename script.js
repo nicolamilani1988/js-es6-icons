@@ -112,7 +112,7 @@ function printItems(){
     let{color,name,prefix,type,family} = elem;
     $(".icons").append(`
         <div>
-          <i class = "${family} ${prefix}${name}" style="color: ${color} "></i>
+          <i class = "${family} ${prefix}${name} ${type}" style="color: ${color} "></i>
           <div class="title">${name.toUpperCase()}</div>
       `)
   })
@@ -162,6 +162,17 @@ function addColor(){
 
 }
 
+// Milestone 3
+// Creiamo una select con i tipi di icone e usiamola per filtrare le icone
+function filterCreate(){
+  const types = getTypes();
+  console.log(types);
+  types.forEach(elem => {
+    $("#type").append(`
+        <option value="${elem}">${elem}</option>
+      `)
+  })
+}
 
 
 function init(){
@@ -169,7 +180,7 @@ function init(){
   printItems();
   getTypes();
   addColor();
-
+  filterCreate();
 }
 
 $(init);
