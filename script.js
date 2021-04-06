@@ -263,9 +263,9 @@ function init(){
   addColor();
   filterCreate();
   //FUNZIONE NICOLA
-  $(".select-option").click(filterSelect);
+  //$(".select-option").click(filterSelect); // su Chrome non funziona il click sulle options
   // FUNZIONE OLGA
-  // $("#type").change(selectChange);
+  $("#type").change(selectChange);
 }
 
 $(init);
